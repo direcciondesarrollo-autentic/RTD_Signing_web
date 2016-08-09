@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!-- MVC -->
+    <mvc:annotation-driven/>
+
+    <context:component-scan base-package="com.rtd"/>
+
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix">
+            <value>/WEB-INF/views/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean>
+
+    <!--<bean id="webServiceClient" class="WebServiceClient">
+        <property name="defaultUri" value="http://localhost:8080/WebService"/>
+    </bean>-->
+
+    <!-- Spring Security -->
+    <security:http auto-config="true">
+        <security:intercept-url pattern="/" access="permitAll"/>
+        <security:intercept-url pattern="/home" access="hasRole('ADMIN')"/>
+        <security:intercept-url pattern="/admin" access="hasRole('ADMIN')"/>
+        <security:intercept-url pattern="/dba" access="hasRole('ADMIN') and hasRole('DBA')"/>
+        <security:form-login authentication-failure-url="/Access_Denied"/>
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="bill" password="abc123" authorities="ROLE_USER"/>
+                <security:user name="admin" password="root123" authorities="ROLE_ADMIN"/>
+                <security:user name="dba" password="root123" authorities="ROLE_ADMIN,ROLE_DBA"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <!-- ActiveMQ
+    <bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <constructor-arg index="0" value="tcp://127.0.0.1:61616"/>
+    </bean>
+
+    <bean id="connectionFactory"
+          class="org.springframework.jms.connection.CachingConnectionFactory">
+        <constructor-arg ref="amqConnectionFactory"/>
+    </bean>
+
+    <bean id="defaultDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="Send2Recv"/>
+    </bean>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="defaultDestination" ref="defaultDestination"/>
+    </bean>
+
+    <bean id="jmsMessageSender" class="com.jms.JmsMessageSender">
+    </bean>   -->
+</beans>
