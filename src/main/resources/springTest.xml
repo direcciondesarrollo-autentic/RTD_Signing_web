@@ -24,8 +24,8 @@
     </bean>
 
     <bean id="amazonAWSCredentials" class="com.amazonaws.auth.BasicAWSCredentials">
-        <constructor-arg value="AKIAJWVMNVIARSBU47CQ"/>
-        <constructor-arg value="uq9MOAOTdOyC8WsSJRxjIWbVsm0a69+sjCY5nhyO"/>
+        <constructor-arg value="."/>
+        <constructor-arg value="."/>
     </bean>
 
     <dynamodb:repositories base-package="com.repositories" amazon-dynamodb-ref="amazonDynamoDB"/>

@@ -28,7 +28,7 @@ public class DynamoDBConfig {
     @Bean
     public AWSCredentials amazonAWSCredentials() {
         // Or use an AWSCredentialsProvider/AWSCredentialsProviderChain
-        return new BasicAWSCredentials("AKIAJWVMNVIARSBU47CQ", "uq9MOAOTdOyC8WsSJRxjIWbVsm0a69+sjCY5nhyO");
+        return new BasicAWSCredentials(".", ".");
     }
 
     /*
