@@ -52,6 +52,17 @@
         </security:authentication-provider>
     </security:authentication-manager>
 
+    <!-- DynamoDB -->
+    <bean id="amazonDynamoDB" class="com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient">
+        <constructor-arg ref="amazonAWSCredentials"/>
+        <property name="endpoint" value="us-west-2"/>
+    </bean>
+
+    <bean id="amazonAWSCredentials" class="com.amazonaws.auth.BasicAWSCredentials">
+        <constructor-arg value="AKIAJWVMNVIARSBU47CQ"/>
+        <constructor-arg value="uq9MOAOTdOyC8WsSJRxjIWbVsm0a69+sjCY5nhyO"/>
+    </bean>
+
     <!-- ActiveMQ
     <bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
         <constructor-arg index="0" value="tcp://127.0.0.1:61616"/>

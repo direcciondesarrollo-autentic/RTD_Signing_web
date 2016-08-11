@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dynamodb="http://docs.socialsignin.org/schema/data/dynamodb"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+
+
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+
+
+        http://docs.socialsignin.org/schema/data/dynamodb
+        http://docs.socialsignin.org/schema/data/dynamodb/spring-dynamodb.xsd">
+
+
+    <context:component-scan base-package="com.repositories"/>
+
+    <!-- DynamoDB -->
+    <bean id="amazonDynamoDB" class="com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient">
+        <constructor-arg ref="amazonAWSCredentials"/>
+        <property name="endpoint" value="${amazon.dynamodb.endpoint}"/>
+    </bean>
+
+    <bean id="amazonAWSCredentials" class="com.amazonaws.auth.BasicAWSCredentials">
+        <constructor-arg value="AKIAJWVMNVIARSBU47CQ"/>
+        <constructor-arg value="uq9MOAOTdOyC8WsSJRxjIWbVsm0a69+sjCY5nhyO"/>
+    </bean>
+
+    <dynamodb:repositories base-package="com.repositories" amazon-dynamodb-ref="amazonDynamoDB"/>
+
+</beans>
