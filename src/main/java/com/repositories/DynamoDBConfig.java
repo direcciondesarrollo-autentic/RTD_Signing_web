@@ -1,7 +1,6 @@
 package com.repositories;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
@@ -15,20 +14,14 @@ import org.springframework.context.annotation.Configuration;
 public class DynamoDBConfig {
 
     @Bean
-    public AmazonDynamoDB amazonDynamoDB(AWSCredentials amazonAWSCredentials) {
-        final AmazonDynamoDBClient client = new AmazonDynamoDBClient(amazonAWSCredentials);
+    public AmazonDynamoDB amazonDynamoDB(/*AWSCredentials amazonAWSCredentials*/) {
+        final AmazonDynamoDBClient client = new AmazonDynamoDBClient(new ProfileCredentialsProvider()/*amazonAWSCredentials*/);
         //client.setSignerRegionOverride(Region.getRegion(Regions.US_WEST_2).getName()/*Regions.fromName(region).getName()*/);
         client.withRegion(Region.getRegion(Regions.US_WEST_2));
         /*if (StringUtils.isNotEmpty(amazonDynamoDBEndpoint)) {
             client.setEndpoint(amazonDynamoDBEndpoint);
         } */
         return client;
-    }
-
-    @Bean
-    public AWSCredentials amazonAWSCredentials() {
-        // Or use an AWSCredentialsProvider/AWSCredentialsProviderChain
-        return new BasicAWSCredentials(".", ".");
     }
 
     /*

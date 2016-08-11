@@ -34,8 +34,8 @@ public class UserRepositoryIntegrationTest {
         assertEquals(user, actualUser);*/
 
         User user = new User();
-        user.setFirstName("firstName");
-        user.setLastName("lastName");
+        user.setFirstName("firstName 2");
+        user.setLastName("lastName 2");
         userRepository.save(user);
 
         assertEquals(true, true);
